@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h1>{{ data }}</h1>
+    <h1> asd </h1>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -84,11 +86,24 @@
 </template>
 
 <script>
+import IndexService from '@/services/IndexService'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      data: 'test'
+    }
+  },
+  mounted () {
+    this.getData()
+  },
+  methods: {
+    async getData () {
+      console.log('asdasdasd')
+      const response = await IndexService.getData()
+      this.data = response.data
+      console.log(this.data)
     }
   }
 }
