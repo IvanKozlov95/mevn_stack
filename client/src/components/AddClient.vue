@@ -15,19 +15,16 @@
           <table>
             <tr>
               <td>Name</td>
-              <td>Add</td>
-              <td>Edit</td>
-              <td>Delete</td>
+              <td>Actions</td>
             </tr>
             <tr v-for="provider in providers" :key="provider._id">
               <td>{{ provider.name }}</td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>
+              </td>
             </tr>
             <tr>
               <td colspan="4" class="table-footer">
-                <router-link v-bind:to="{ name: 'addprovider' }" class="link">Add Provider</router-link>
+                <button class="btn" @click="showAddProviderModal">Add provider</button>
               </td>
             </tr>
           </table>
@@ -36,12 +33,17 @@
           <button class="btn" @click="addClient">Add</button>
         </div>
       </div>
+    <modal name="add-provider" @before-close="getProviders()">
+      <input type="text" name="name" placeholder="Name" v-model="newProvider.name">
+      <button class="btn" @click="addProvider">Add provider</button>
+    </modal>
   </div>
 </template>
 
 <script>
 import ClientsService from '@/services/ClientsService'
 import ProvidersService from '@/services/ProvidersService'
+
 export default {
   name: 'addclient',
   data () {
@@ -50,8 +52,12 @@ export default {
       email: '',
       phone: '',
       selectedProviders: [],
-      providers: []
+      providers: [],
+      newProvider: { name: '' }
     }
+  },
+  mounted () {
+    this.getProviders()
   },
   methods: {
     async addClient () {
@@ -67,9 +73,18 @@ export default {
       )
       this.$router.push({ name: 'Clients' })
     },
+
     async getProviders () {
       const response = await ProvidersService.fetchProviders()
       this.providers = response.data.providers
+    },
+
+    async addProvider () {
+      ProvidersService.addProvider({ name: this.newProvider.name })
+    },
+
+    showAddProviderModal () {
+      this.$modal.show('add-provider')
     }
   }
 }
@@ -88,6 +103,7 @@ export default {
 
 div .table-wrap {
   margin: 0 auto;
+  padding: 0px;
   text-align: center;
 }
 
@@ -106,7 +122,7 @@ div .table-wrap table {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-  width: 520px;
+  width: 495px;
   border: none;
   cursor: pointer;
 }
