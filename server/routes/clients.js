@@ -18,7 +18,8 @@ router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
   let newClient = new Client({
     name: req.body.name,
     email: req.body.email,
-    phone: req.body.phone
+    phone: req.body.phone,
+    providers: req.body.providers
   });
   newClient.save()
     .then(() => res.send('Client added'));
