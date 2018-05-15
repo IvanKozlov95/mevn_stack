@@ -6,9 +6,11 @@ import router from './router'
 import VModal from 'vue-js-modal'
 import VueMultiselect from 'vue-multiselect'
 import VueSweetalert2 from 'vue-sweetalert2'
+import AddProvider from '@/components/AddProvider'
 
 Vue.use(VModal)
 Vue.use(VueSweetalert2)
+Vue.component('addprovider', AddProvider)
 Vue.component('multiselect', VueMultiselect)
 Vue.config.productionTip = false
 
