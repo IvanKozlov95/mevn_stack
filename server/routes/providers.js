@@ -2,7 +2,7 @@ const express     = require('express');
 const router      = express.Router();
 const mongoose    = require('mongoose');
 const mongooseMw  = require('../middlewares/mongoose');
-const Provider = mongoose.model('Providers');
+const Provider = mongoose.model('Provider');
 
 router.get('/', mongooseMw.connectMongo, (req, res, next) => {
   Provider.find({})
@@ -13,7 +13,13 @@ router.get('/', mongooseMw.connectMongo, (req, res, next) => {
 })
 
 router.post('/add', (req, res, next) => {
-  res.send('providers/add is not implemented yet');
+  console.log(req.body);
+  let newProvider = new Provider({
+    name: req.body.name
+  });
+  newProvider.save()
+    .then(() => res.send('Provider added'))
+    .catch((err) => console.log(err));
 })
 
 module.exports = router;
