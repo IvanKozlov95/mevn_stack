@@ -4,10 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VModal from 'vue-js-modal'
+import VueMultiselect from 'vue-multiselect'
 import VueSweetalert2 from 'vue-sweetalert2'
 
 Vue.use(VModal)
 Vue.use(VueSweetalert2)
+Vue.component('multiselect', VueMultiselect)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

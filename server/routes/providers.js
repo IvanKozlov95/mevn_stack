@@ -6,6 +6,7 @@ const Provider = mongoose.model('Provider');
 
 router.get('/', mongooseMw.connectMongo, (req, res, next) => {
   Provider.find({})
+    .select(['name'])
     .then((doc) => {
       res.send( { providers: doc } );
     })

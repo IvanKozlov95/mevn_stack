@@ -1,17 +1,32 @@
 <template>
   <div class="posts">
-    <h1>Add Post</h1>
+    <h1>Add Client</h1>
       <div class="form">
-        <div>
+        <div class="wrap">
           <input type="text" name="name" placeholder="Name" v-model="name">
         </div>
-        <div>
+        <div class="wrap">
           <input type="email" name="email" placeholder="Email" v-model="email">
         </div>
-        <div>
+        <div class="wrap">
           <input type="phone" name="phone" placeholder="Phone" v-model="phone">
         </div>
-        <div class="table-wrap">
+        <div class="multiselect-wrap">
+          <multiselect
+            v-model="selectedProviders"
+            :options="providers"
+            :multiple="true"
+            :close-on-select="false"
+            :clear-on-select="false"
+            :hide-selected="true"
+            :preserve-search="true"
+            placeholder="Providers"
+            label="name"
+            track-by="_id"
+            :preselect-first="true">
+          </multiselect>
+        </div>
+        <div class="table-wrap wrap">
           <table>
             <tr>
               <td>Name</td>
@@ -29,7 +44,7 @@
             </tr>
           </table>
         </div>
-        <div>
+        <div class="wrap">
           <button class="btn" @click="addClient">Add</button>
         </div>
       </div>
@@ -41,11 +56,13 @@
 </template>
 
 <script>
+// import Multiselect from 'vue-multiselect'
 import ClientsService from '@/services/ClientsService'
 import ProvidersService from '@/services/ProvidersService'
 
 export default {
   name: 'addclient',
+  // conponents: { 'multiselect': Multiselect },
   data () {
     return {
       name: '',
@@ -64,7 +81,8 @@ export default {
       await ClientsService.addClient({
         name: this.name,
         email: this.email,
-        phone: this.phone
+        phone: this.phone,
+        providers: this.selectedProviders.map(p => p._id)
       })
       this.$swal(
         'Great!',
@@ -97,7 +115,8 @@ export default {
   outline: none;
   font-size: 12px;
 }
-.form div {
+
+.form div.wrap {
   margin: 20px;
 }
 
@@ -106,7 +125,6 @@ div .table-wrap {
   padding: 0px;
   text-align: center;
 }
-
 div .table-wrap table {
   margin: 0 auto;
 }
@@ -115,7 +133,7 @@ div .table-wrap table {
   padding-top: 10px;
 }
 
-.btn{
+.btn {
   background: #4d7ef7;
   color: #fff;
   padding: 10px 80px;
@@ -126,4 +144,14 @@ div .table-wrap table {
   border: none;
   cursor: pointer;
 }
+
+div .multiselect-wrap {
+  width: 520px;
+  margin: 0 auto;
+}
+
+div .multiselect__select {
+  margin-top: 0px;
+}
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
