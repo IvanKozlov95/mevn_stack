@@ -1,5 +1,5 @@
 <template>
-  <div class="posts">
+  <div class="clients">
     <h1>Add Client</h1>
       <div class="form">
         <div class="wrap">
@@ -19,7 +19,7 @@
             :close-on-select="false"
             :clear-on-select="false"
             :hide-selected="true"
-            :preserve-search="true"
+            :preserve-search="true" 
             placeholder="Providers"
             label="name"
             track-by="_id"
@@ -48,21 +48,17 @@
           <button class="btn" @click="addClient">Add</button>
         </div>
       </div>
-    <modal name="add-provider" @before-close="getProviders()">
-      <input type="text" name="name" placeholder="Name" v-model="newProvider.name">
-      <button class="btn" @click="addProvider">Add provider</button>
-    </modal>
+    <addprovider ref="addProviderModal"></addprovider>
   </div>
 </template>
 
 <script>
-// import Multiselect from 'vue-multiselect'
 import ClientsService from '@/services/ClientsService'
 import ProvidersService from '@/services/ProvidersService'
 
 export default {
   name: 'addclient',
-  // conponents: { 'multiselect': Multiselect },
+
   data () {
     return {
       name: '',
@@ -70,12 +66,14 @@ export default {
       phone: '',
       selectedProviders: [],
       providers: [],
-      newProvider: { name: '' }
     }
   },
+
   mounted () {
     this.getProviders()
+    this.$root.$on('addprovider-modal-close', () => this.getProviders())
   },
+
   methods: {
     async addClient () {
       await ClientsService.addClient({
@@ -97,16 +95,13 @@ export default {
       this.providers = response.data.providers
     },
 
-    async addProvider () {
-      ProvidersService.addProvider({ name: this.newProvider.name })
-    },
-
     showAddProviderModal () {
-      this.$modal.show('add-provider')
+      this.$refs.addProviderModal.open()
     }
   }
 }
 </script>
+
 <style type="text/css">
 .form input, .form textarea, .form table {
   width: 500px;
