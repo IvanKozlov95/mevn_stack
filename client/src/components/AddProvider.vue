@@ -1,6 +1,6 @@
 <template>
   <div>
-    <modal name="addprovider-modal" @before-close="onClose">
+    <modal name="addprovider-modal" @before-close="beforeClose">
       <h1> asdasdasd </h1>
       <input type="text" name="name" placeholder="Name" v-model="name">
       <button class="btn" @click="addProvider">Add provider</button>
@@ -14,10 +14,6 @@ import ProvidersService from '@/services/ProvidersService'
 export default {
   name: 'addprovider',
 
-  props: {
-    onClose: Function
-  },
-
   data () {
     return {
       name: ''
@@ -28,6 +24,14 @@ export default {
     async addProvider () {
       await ProvidersService.addProvider({ name: this.name })
     },
+
+    open () {
+      this.$modal.show('addprovider-modal')
+    },
+
+    beforeClose () {
+      this.$root.$emit('addprovider-modal-close');
+    }
   }
 }
 
