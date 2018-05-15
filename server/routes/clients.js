@@ -13,8 +13,11 @@ router.get('/', mongooseMw.connectMongo, (req, res, next) => {
 })
 
 router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
+  console.log(req.body);
   let newClient = new Client({
-    name: 'Test'
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone
   });
   newClient.save()
     .then(() => res.send('Client added'));
