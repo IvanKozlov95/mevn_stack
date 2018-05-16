@@ -28,7 +28,7 @@
         </b-form-group>
         <addprovider ref="addProviderModal"></addprovider>
         <providerslist ref="providersList"></providerslist>
-        <b-button variant="primary" @click="addClient">Add client</b-button>
+        <b-button type="submit" variant="primary">Add client</b-button>
       </b-form>
   </b-container>
 </template>
