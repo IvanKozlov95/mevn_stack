@@ -13,14 +13,21 @@ router.get('/', mongooseMw.connectMongo, (req, res, next) => {
     .catch((err) => console.error(err));
 })
 
-router.post('/add', (req, res, next) => {
+router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
   console.log(req.body);
   let newProvider = new Provider({
     name: req.body.name
   });
   newProvider.save()
     .then(() => res.send('Provider added'))
-    .catch((err) => console.log(err));
+    .catch(next);
 })
+
+router.delete('/:id', mongooseMw.connectMongo, (req, res, next) => {
+  Provider
+    .remove({ _id: new mongoose.Types.ObjectId(req.params.id) })
+    .then(() => res.send('Provider deleted'))
+    .catch(next);
+});
 
 module.exports = router;
