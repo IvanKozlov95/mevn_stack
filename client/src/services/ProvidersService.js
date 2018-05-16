@@ -7,5 +7,9 @@ export default {
 
   addProvider (params) {
     return Api().post('providers/add', params)
+  },
+
+  deleteProvider (params) {
+    return Api().delete('providers/' + params.id)
   }
 }
