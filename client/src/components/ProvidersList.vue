@@ -49,8 +49,18 @@ export default {
   methods: {
     async getProviders () {
       const response = await ProvidersService.fetchProviders()
-      // todo: save selected on update
-      this.providers = response.data.providers
+      if (this.providers) {
+        let oldProviders = this.providers
+        this.providers = response.data.providers
+        for (let p of this.providers) {
+          p.selected = 'false'
+          let old = oldProviders.find(el => el._id === p._id)
+          console.log(old)
+          if (typeof old !== 'undefined') {
+            p.selected = old.selected
+          }
+        }
+      }
     },
 
     updateProvider () {
