@@ -26,24 +26,6 @@
             :preselect-first="true">
           </multiselect>
         </div>
-        <div class="table-wrap wrap">
-          <table>
-            <tr>
-              <td>Name</td>
-              <td>Actions</td>
-            </tr>
-            <tr v-for="provider in providers" :key="provider._id">
-              <td>{{ provider.name }}</td>
-              <td>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="4" class="table-footer">
-                <button class="btn" @click="showAddProviderModal">Add provider</button>
-              </td>
-            </tr>
-          </table>
-        </div>
         <div class="wrap">
           <button class="btn" @click="addClient">Add</button>
         </div>
