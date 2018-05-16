@@ -1,37 +1,54 @@
 <template>
-  <div class="clients">
+  <b-container class="container">
     <h1>Add Client</h1>
-      <div class="form">
-        <div class="wrap">
-          <input type="text" name="name" placeholder="Name" v-model="name">
-        </div>
-        <div class="wrap">
-          <input type="email" name="email" placeholder="Email" v-model="email">
-        </div>
-        <div class="wrap">
-          <input type="phone" name="phone" placeholder="Phone" v-model="phone">
-        </div>
-        <div class="multiselect-wrap">
-          <multiselect
-            v-model="selectedProviders"
-            :options="providers"
-            :multiple="true"
-            :close-on-select="false"
-            :clear-on-select="false"
-            :hide-selected="true"
-            :preserve-search="true" 
-            placeholder="Providers"
-            label="name"
-            track-by="_id"
-            :preselect-first="true">
-          </multiselect>
-        </div>
-        <div class="wrap">
-          <b-button variant="primary" @click="addClient">Add</b-button>
-        </div>
-      </div>
-    <addprovider ref="addProviderModal"></addprovider>
-  </div>
+      <b-form class="form" @submit="addClient">
+        <b-form-group>
+          <b-form-input type="text"
+                        name="name"
+                        placeholder="Name"
+                        required
+                        v-model="name">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group>
+          <b-form-input type="email"
+                        name="email"
+                        placeholder="Email"
+                        required
+                        v-model="email">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group>
+          <b-form-input type="text"
+                        name="phone"
+                        placeholder="Phone"
+                        required
+                        v-model="phone">
+          </b-form-input>
+        </b-form-group>
+        <addprovider ref="addProviderModal"></addprovider>
+        <b-table striped
+               bordered
+               :items="providers"
+               :fields="providersDisplayFileds">
+        <template slot="name" slot-scope="data">
+          <b-form-checkbox v-model="providers[data.index].selected"
+                           value="true"
+                           unchecked-value=false>{{ data.item.name }}</b-form-checkbox>
+        </template>
+        <template slot="actions" slot-scope="data">
+          <b-btn size="sm" @click="editProvider(data.item)">Edit</b-btn>
+          <b-btn size="sm" @click="deleteProvider(data.item._id)">Delete</b-btn>
+        </template>
+        </b-table>
+        <b-button type="submit" variant="primary">Add client</b-button>
+      </b-form>
+       <b-row>
+          <b-col>
+            <!-- <b-form-input type="text" name="client-name" placeholder="Name" v-model="name"></b-form-input> -->
+          </b-col>
+        </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -46,26 +63,28 @@ export default {
 
   data () {
     return {
+      asd: true,
       name: '',
       email: '',
       phone: '',
-      selectedProviders: [],
-      providers: [],
+      providersDisplayFileds: [ 'name', 'actions' ],
+      providers: []
     }
   },
 
   mounted () {
     this.getProviders()
-    this.$root.$on('addprovider-modal-close', () => this.getProviders())
+    this.$root.$on('providersListChanged', () => this.getProviders())
   },
 
   methods: {
-    async addClient () {
+    async addClient (evt) {
+      evt.preventDefault()
       await ClientsService.addClient({
         name: this.name,
         email: this.email,
         phone: this.phone,
-        providers: this.selectedProviders.map(p => p._id)
+        providers: this.providers.filter(p => p.selected === 'true').map(p => p._id)
       })
       this.$swal(
         'Great!',
@@ -82,55 +101,30 @@ export default {
 
     showAddProviderModal () {
       this.$refs.addProviderModal.open()
+    },
+
+    editProvider () {
+
+    },
+
+    async deleteProvider (id) {
+      console.log(id)
+      if (typeof id !== 'undefined') {
+        await ProvidersService.deleteProvider({ id: id })
+        this.$root.$emit('providersListChanged')
+      }
     }
   }
 }
 </script>
 
 <style type="text/css">
-.form input, .form textarea, .form table {
+.container {
   width: 500px;
-  padding: 10px;
-  border: 1px solid #e0dede;
-  outline: none;
-  font-size: 12px;
 }
 
-.form div.wrap {
-  margin: 20px;
+.form input {
+  margin-bottom: 10px;
 }
 
-div .table-wrap {
-  margin: 0 auto;
-  padding: 0px;
-  text-align: center;
-}
-div .table-wrap table {
-  margin: 0 auto;
-}
-
-.table-footer {
-  padding-top: 10px;
-}
-
-/* .btn {
-  background: #4d7ef7;
-  color: #fff;
-  padding: 10px 80px;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
-  width: 495px;
-  border: none;
-  cursor: pointer;
-} */
-
-div .multiselect-wrap {
-  width: 520px;
-  margin: 0 auto;
-}
-
-div .multiselect__select {
-  margin-top: 0px;
-}
 </style>
