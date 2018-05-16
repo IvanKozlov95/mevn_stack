@@ -27,7 +27,7 @@
           </multiselect>
         </div>
         <div class="wrap">
-          <button class="btn" @click="addClient">Add</button>
+          <b-button variant="primary" @click="addClient">Add</b-button>
         </div>
       </div>
     <addprovider ref="addProviderModal"></addprovider>
@@ -37,6 +37,9 @@
 <script>
 import ClientsService from '@/services/ClientsService'
 import ProvidersService from '@/services/ProvidersService'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
   name: 'addclient',
@@ -110,7 +113,7 @@ div .table-wrap table {
   padding-top: 10px;
 }
 
-.btn {
+/* .btn {
   background: #4d7ef7;
   color: #fff;
   padding: 10px 80px;
@@ -120,7 +123,7 @@ div .table-wrap table {
   width: 495px;
   border: none;
   cursor: pointer;
-}
+} */
 
 div .multiselect-wrap {
   width: 520px;
@@ -131,4 +134,3 @@ div .multiselect__select {
   margin-top: 0px;
 }
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
