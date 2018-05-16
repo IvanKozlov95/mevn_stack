@@ -55,7 +55,6 @@ export default {
         for (let p of this.providers) {
           p.selected = 'false'
           let old = oldProviders.find(el => el._id === p._id)
-          console.log(old)
           if (typeof old !== 'undefined') {
             p.selected = old.selected
           }
@@ -63,12 +62,19 @@ export default {
       }
     },
 
-    updateProvider () {
-      console.log('update provider')
+    async updateProvider () {
+      const response = await ProvidersService.updateProvider(this.current)
+      if (response.status === 200) {
+        this.getProviders()
+        this.$swal('Great!', 'Provider has been added!', 'success')
+      } else {
+        this.$swal('Oops', 'Something went wrong :(', 'failure')
+      }
     },
 
     editProvider (current) {
-      this.current = {...current}
+      this.current.id = current._id
+      this.current.name = current.name
       this.$modal.show('edit-modal')
     },
 
@@ -76,7 +82,6 @@ export default {
       if (typeof id !== 'undefined') {
         await ProvidersService.deleteProvider({ id: id })
         this.getProviders()
-        // this.$root.$emit('providersListChanged')
       }
     }
   }

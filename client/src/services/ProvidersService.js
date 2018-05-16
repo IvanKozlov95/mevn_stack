@@ -9,6 +9,10 @@ export default {
     return Api().post('providers/add', params)
   },
 
+  updateProvider (params) {
+    return Api().put('providers/' + params.id, params)
+  },
+
   deleteProvider (params) {
     return Api().delete('providers/' + params.id)
   }

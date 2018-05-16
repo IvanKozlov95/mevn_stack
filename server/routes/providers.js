@@ -23,6 +23,18 @@ router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
     .catch(next);
 })
 
+router.put('/:id', mongooseMw.connectMongo, (req, res, next) => {
+  let objectId = new mongoose.Types.ObjectId(req.params.id);
+  console.log(req.body);
+  Provider.findById(objectId)
+    .then(provider => {
+      provider.name = req.body.name;
+      return provider.save()
+    })
+    .then(() => res.send('Provdier updated'))
+    .catch(next);
+})
+
 router.delete('/:id', mongooseMw.connectMongo, (req, res, next) => {
   Provider
     .remove({ _id: new mongoose.Types.ObjectId(req.params.id) })
