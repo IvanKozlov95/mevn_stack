@@ -9,6 +9,10 @@ export default {
     return Api().post('clients/add', params)
   },
 
+  updateClient (params) {
+    return Api().put('clients/' + params.id, params)
+  },
+
   deleteClient (params) {
     return Api().delete('clients/' + params.id)
   }
