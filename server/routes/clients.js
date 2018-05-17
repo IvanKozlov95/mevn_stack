@@ -25,4 +25,11 @@ router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
     .then(() => res.send('Client added'));
 })
 
+router.delete('/:id', mongooseMw.connectMongo, (req, res, next) => {
+  Client
+    .remove({ _id: new mongoose.Types.ObjectId(req.params.id) })
+    .then(() => res.send('Client deleted'))
+    .catch(next);
+})
+
 module.exports = router;

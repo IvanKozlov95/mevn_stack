@@ -17,7 +17,7 @@
         </template>
         <template slot="actions" slot-scope="data">
           <b-btn size="sm" @click="editProvider(data.item)">Edit</b-btn>
-          <b-btn size="sm" @click="deleteProvider(data.item._id)">Delete</b-btn>
+          <b-btn size="sm" @click="deleteClient(data.item._id)">Delete</b-btn>
         </template>
       </b-table>
     </div>
@@ -32,20 +32,30 @@
 import ClientsService from '@/services/ClientsService'
 export default {
   name: 'clients',
+
   data () {
     return {
       clients: [],
       displayFields: [ 'name', 'email', 'phone', 'providers', 'actions' ]
     }
   },
+
   mounted () {
     this.getClients()
   },
+
   methods: {
     async getClients () {
       const response = await ClientsService.fetchClients()
       console.log(response.data.clients)
       this.clients = response.data.clients
+    },
+
+    async deleteClient (id) {
+      if (typeof id !== 'undefined') {
+        await ClientsService.deleteClient({ id: id })
+        this.getClients()
+      }
     }
   }
 }
