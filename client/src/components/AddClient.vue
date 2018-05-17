@@ -75,7 +75,7 @@ export default {
 
 <style type="text/css">
 .container {
-  width: 500px;
+  width: 700px;
 }
 
 .form input {
