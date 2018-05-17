@@ -81,7 +81,7 @@ export default {
           .map(p => p._id)
       }
       let response = {}
-      if (client.id !== '') {
+      if (typeof client.id !== 'undefined') {
         response = await this.updateClient(client)
       } else {
         response = await this.addClient(client)
