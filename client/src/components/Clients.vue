@@ -55,8 +55,11 @@ export default {
 
     async deleteClient (id) {
       if (typeof id !== 'undefined') {
-        await ClientsService.deleteClient({ id: id })
+        let response = await ClientsService.deleteClient({ id: id })
+        if (response.status === 200) {
+          this.$root.$emit('clientsListChanged')
         this.getClients()
+      }
       }
     },
 
