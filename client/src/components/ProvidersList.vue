@@ -7,7 +7,7 @@
       <template slot="name" slot-scope="data">
         <b-form-checkbox v-model="providers[data.index].selected"
                         value="true"
-                        unchecked-value=false>{{ data.item.name }}</b-form-checkbox>
+                        unchecked-value="false">{{ data.item.name }}</b-form-checkbox>
       </template>
       <template slot="actions" slot-scope="data">
         <b-btn size="sm" @click="editProvider(data.item)">Edit</b-btn>
@@ -47,6 +47,20 @@ export default {
   },
 
   methods: {
+    setSelected (selected) {
+      if (typeof selected !== 'undefined') {
+        let newProviders = this.providers.map(p => {
+          p.selected = 'false'
+          let sel = selected.find(el => el._id === p._id)
+          if (typeof sel !== 'undefined') {
+            p.selected = 'true'
+          }
+          return p
+        })
+        this.providers = newProviders
+      }
+    },
+
     async getProviders () {
       const response = await ProvidersService.fetchProviders()
       if (this.providers) {
