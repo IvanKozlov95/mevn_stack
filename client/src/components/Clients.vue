@@ -16,7 +16,7 @@
           </span>
         </template>
         <template slot="actions" slot-scope="data">
-          <b-btn size="sm" @click="editProvider(data.item)">Edit</b-btn>
+          <b-btn size="sm" @click="editClient(data.item)">Edit</b-btn>
           <b-btn size="sm" @click="deleteClient(data.item._id)">Delete</b-btn>
         </template>
       </b-table>
@@ -25,6 +25,7 @@
       There are no clients... Lets add one now <br /><br />
       <router-link v-bind:to="{ name: 'addclient' }" class="link">Add Post</router-link>
     </div>
+    <client ref="editClient"></client>
   </b-container>
 </template>
 
@@ -56,6 +57,10 @@ export default {
         await ClientsService.deleteClient({ id: id })
         this.getClients()
       }
+    },
+
+    editClient (client) {
+      this.$refs.editClient.open(client)
     }
   }
 }
