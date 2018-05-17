@@ -31,7 +31,7 @@
       </b-form>
     </b-container>
     <div slot="modal-footer" class="w-100">
-        <b-button variant="primary" @click="sumbitForm">Add client</b-button>
+        <b-button variant="primary" @click="sumbitForm">{{ buttonText }}</b-button>
     </div>
   </b-modal>
 </template>
@@ -52,13 +52,15 @@ export default {
       name: '',
       email: '',
       phone: '',
-      showModal: false
+      showModal: false,
+      buttonText: ''
     }
   },
 
   methods: {
     open (client) {
       this.setData(client)
+      this.buttonText = typeof this.id === 'undefined' ? 'Add client' : 'Update client'
       this.showModal = true
     },
 
