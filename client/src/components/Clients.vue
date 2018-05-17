@@ -1,33 +1,31 @@
 <template>
-  <div class="client">
-    <h1>Posts</h1>
-    <h1> {{ clients.length }}</h1>
+  <b-container class="container">
+    <h1>Clients</h1>
     <div v-if="clients.length > 0" class="table-wrap">
       <div>
-        <router-link v-bind:to="{ name: 'addclient' }" class="link">Add Post</router-link>
+        <router-link v-bind:to="{ name: 'addclient' }" class="link">Add client</router-link>
       </div>
       <br/>
-      <table>
-        <tr>
-          <td>Name</td>
-          <td width="350">Email</td>
-          <td width="200">Phone</td>
-          <td width="100" align="center">Action</td>
-        </tr>
-        <tr v-for="client in clients" :key="client._id">
-          <td>{{ client.name }}</td>
-          <td>{{ client.email }}</td>
-          <td>{{ client.phone }}</td>
-          <td align="center">
-          </td>
-        </tr>
-      </table>
+      <b-table striped
+               bordered
+               :items="clients"
+               :fields="displayFields">
+        <template slot="providers" slot-scope="data">
+          <span v-for="(p, idx) in data.item.providers" :key="p._id">
+            {{ p.name }}<span v-if="idx + 1 !== data.item.providers.length">, </span>
+          </span>
+        </template>
+        <template slot="actions" slot-scope="data">
+          <b-btn size="sm" @click="editProvider(data.item)">Edit</b-btn>
+          <b-btn size="sm" @click="deleteProvider(data.item._id)">Delete</b-btn>
+        </template>
+      </b-table>
     </div>
     <div v-else>
       There are no clients... Lets add one now <br /><br />
       <router-link v-bind:to="{ name: 'addclient' }" class="link">Add Post</router-link>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -36,7 +34,8 @@ export default {
   name: 'clients',
   data () {
     return {
-      clients: []
+      clients: [],
+      displayFields: [ 'name', 'email', 'phone', 'providers', 'actions' ]
     }
   },
   mounted () {
@@ -53,31 +52,15 @@ export default {
 </script>
 
 <style type="text/css">
-  .table-wrap {
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
+  .container {
+    width: 700px;
   }
-  table th, table tr {
-    text-align: left;
-  }
-  table thead {
-    background: #f2f2f2;
-  }
-  table tr td {
-    padding: 10px;
-  }
-  table tr:nth-child(odd) {
-    background: #f2f2f2;
-  }
-  table tr:nth-child(1) {
-    background: #4d7ef7;
-    color: #fff;
-  }
+
   a {
     color: #4d7ef7;
     text-decoration: none;
   }
+
   a.link {
     background: #4d7ef7;
     color: #fff;
