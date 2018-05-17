@@ -43,6 +43,7 @@ export default {
 
   mounted () {
     this.getClients()
+    this.$root.$on('clientsListChanged', () => this.getClients())
   },
 
   methods: {

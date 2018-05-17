@@ -88,6 +88,7 @@ export default {
       }
       if (response.status === 200) {
         this.showModal = false
+        this.$root.$emit('clientsListChanged')
       }
     },
 
