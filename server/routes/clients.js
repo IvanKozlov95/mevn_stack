@@ -25,6 +25,21 @@ router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
     .then(() => res.send('Client added'));
 })
 
+router.put('/:id', mongooseMw.connectMongo, (req, res, next) => {
+  let objectId = new mongoose.Types.ObjectId(req.params.id);
+  console.log(req.body);
+  Client.findById(objectId)
+    .then(client => {
+      client.name = req.body.name;
+      client.email = req.body.email;
+      client.phone = req.body.phone;
+      client.providers = req.body.providers;
+      return client.save()
+    })
+    .then(() => res.send('Client updated'))
+    .catch(next);
+})
+
 router.delete('/:id', mongooseMw.connectMongo, (req, res, next) => {
   Client
     .remove({ _id: new mongoose.Types.ObjectId(req.params.id) })
