@@ -71,6 +71,13 @@ export default {
     },
 
     async sumbitForm () {
+      let form = this.$refs.form
+
+      if (!form.checkValidity()) {
+        form.reportValidity()
+        return
+      }
+
       let client = {
         id: this.id,
         name: this.name,
