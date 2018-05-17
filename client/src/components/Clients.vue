@@ -2,9 +2,6 @@
   <b-container class="container">
     <h1>Clients</h1>
     <div v-if="clients.length > 0" class="table-wrap">
-      <div>
-        <router-link v-bind:to="{ name: 'addclient' }" class="link">Add client</router-link>
-      </div>
       <br/>
       <b-table striped
                bordered
@@ -20,6 +17,7 @@
           <b-btn size="sm" @click="deleteClient(data.item._id)">Delete</b-btn>
         </template>
       </b-table>
+      <b-btn variant="primary" @click="editClient({})">Add client</b-btn>
     </div>
     <div v-else>
       There are no clients... Lets add one now <br /><br />
@@ -58,8 +56,8 @@ export default {
         let response = await ClientsService.deleteClient({ id: id })
         if (response.status === 200) {
           this.$root.$emit('clientsListChanged')
-        this.getClients()
-      }
+          this.getClients()
+        }
       }
     },
 
