@@ -9,27 +9,25 @@
                           required
                           v-model="name"></b-form-input>
             <b-input-group-append>
-              <b-button variant="primary" @click="addProvider">Add provider</b-button>
+              <b-button variant="primary" @click="addProvider">{{ buttonText }}</b-button>
             </b-input-group-append>
           </b-input-group>
       </b-form-group>
     </b-form>
-    <!-- <modal name="addprovider-modal" @before-close="beforeClose">
-      <h1> asdasdasd </h1>
-      <input type="text" name="name" placeholder="Name" v-model="name">
-      <button class="btn" @click="addProvider">Add provider</button>
-    </modal> -->
   </div>
 </template>
 
 <script>
 import ProvidersService from '@/services/ProvidersService'
 
+const addProviderText = 'Add provider'
+
 export default {
   name: 'addprovider',
 
   data () {
     return {
+      buttonText: addProviderText,
       name: ''
     }
   },
