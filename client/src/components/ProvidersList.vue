@@ -2,25 +2,23 @@
   <div>
     <b-table striped
             bordered
+            fixed
             :items="providers"
             :fields="providersDisplayFileds">
-      <template slot="name" slot-scope="data">
+      <template slot="name" slot-scope="data" width="300">
         <b-form-checkbox v-model="providers[data.index].selected"
                         value="true"
-                        unchecked-value="false">{{ data.item.name }}</b-form-checkbox>
+                        unchecked-value="false"
+                        :id="data.item._id + '_name'">
+          {{ data.item.name }}
+        </b-form-checkbox>
+        <editprovider :ref="data.item._id + '_edit'"></editprovider>
       </template>
       <template slot="actions" slot-scope="data">
         <b-btn size="sm" @click="editProvider(data.item)">Edit</b-btn>
         <b-btn size="sm" @click="deleteProvider(data.item._id)">Delete</b-btn>
       </template>
     </b-table>
-    <modal name="edit-modal">
-      <b-container class="container">
-        <h1> Edit provider </h1>
-        <input type="text" name="name" placeholder="Name" v-model="current.name">
-        <b-button size="sm" variant="primary" @click="updateProvider">Update provider</b-button>
-      </b-container>
-    </modal>
   </div>
 </template>
 
@@ -47,6 +45,10 @@ export default {
   },
 
   methods: {
+    editProvider (provider) {
+      this.$refs[provider._id + '_edit'].show(provider)
+    },
+
     setSelected (selected) {
       if (typeof selected !== 'undefined') {
         let newProviders = this.providers.map(p => {
@@ -84,12 +86,6 @@ export default {
       } else {
         this.$swal('Oops', 'Something went wrong :(', 'failure')
       }
-    },
-
-    editProvider (current) {
-      this.current.id = current._id
-      this.current.name = current.name
-      this.$modal.show('edit-modal')
     },
 
     async deleteProvider (id) {
