@@ -69,7 +69,7 @@ export default {
       this.name = client.name
       this.email = client.email
       this.phone = client.phone
-      this.$refs.providersList.setSelected(client.providers)
+      this.$refs.providersList.selected = client.providers
     },
 
     async sumbitForm () {
@@ -85,9 +85,7 @@ export default {
         name: this.name,
         email: this.email,
         phone: this.phone,
-        providers: this.$refs.providersList.providers
-          .filter(p => p.selected === 'true')
-          .map(p => p._id)
+        providers: this.$refs.providersList.selected.map(p => p._id)
       }
       let response = {}
       if (typeof client.id !== 'undefined') {

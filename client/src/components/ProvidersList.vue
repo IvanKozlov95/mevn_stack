@@ -6,9 +6,9 @@
             :items="providers"
             :fields="providersDisplayFileds">
       <template slot="name" slot-scope="data" width="300">
-        <b-form-checkbox v-model="providers[data.index].selected"
-                        value="true"
-                        unchecked-value="false"
+        <b-form-checkbox v-model="data.item.selected"
+                        :value=true
+                        :unchecked-value=false
                         :id="data.item._id + '_name'">
           {{ data.item.name }}
         </b-form-checkbox>
@@ -34,8 +34,7 @@ export default {
   data () {
     return {
       providers: [],
-      providersDisplayFileds: [ 'name', 'actions' ],
-      current: {}
+      providersDisplayFileds: [ 'name', 'actions' ]
     }
   },
 
@@ -49,33 +48,38 @@ export default {
       this.$refs[provider._id + '_edit'].show(provider)
     },
 
-    setSelected (selected) {
-      if (typeof selected !== 'undefined') {
-        let newProviders = this.providers.map(p => {
-          p.selected = 'false'
-          let sel = selected.find(el => el._id === p._id)
-          if (typeof sel !== 'undefined') {
-            p.selected = 'true'
-          }
-          return p
-        })
-        this.providers = newProviders
+  computed: {
+    selected: {
+      set: function (selected) {
+        selected = selected || []
+        if (this.providers) {
+          this.providers = this.providers.map(p => {
+            if (selected.find(sel => sel._id === p._id)) {
+              p.selected = true
+            } else {
+              p.selected = false
+            }
+            return p
+          })
+        }
+      },
+
+      get: function () {
+        return this.providers.filter(p => p.selected === true)
       }
+    }
+  },
+
+  methods: {
+    editProvider (provider) {
+      this.$refs[provider._id + '_edit'].show(provider)
     },
 
     async getProviders () {
       const response = await ProvidersService.fetchProviders()
-      if (this.providers) {
-        let oldProviders = this.providers
-        this.providers = response.data.providers
-        for (let p of this.providers) {
-          p.selected = 'false'
-          let old = oldProviders.find(el => el._id === p._id)
-          if (typeof old !== 'undefined') {
-            p.selected = old.selected
-          }
-        }
-      }
+      let selectedProviders = this.providers.filter(p => p.selected)
+      this.providers = response.data.providers
+      this.selected = selectedProviders
     },
 
     async updateProvider () {
