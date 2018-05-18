@@ -9,6 +9,7 @@ import VueMultiselect from 'vue-multiselect'
 import VueSweetalert2 from 'vue-sweetalert2'
 import Client from '@/components/Client'
 import AddProvider from '@/components/AddProvider'
+import EditProvider from '@/components/EditProvider'
 import ProvidersList from '@/components/ProvidersList'
 
 Vue.use(VModal)
@@ -16,6 +17,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
 Vue.component('client', Client)
 Vue.component('addprovider', AddProvider)
+Vue.component('editprovider', EditProvider)
 Vue.component('multiselect', VueMultiselect)
 Vue.component('providerslist', ProvidersList)
 Vue.config.productionTip = false
