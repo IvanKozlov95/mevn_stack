@@ -17,12 +17,11 @@
           <b-btn size="sm" @click="deleteClient(data.item._id)">Delete</b-btn>
         </template>
       </b-table>
-      <b-btn variant="primary" @click="editClient({})">Add client</b-btn>
     </div>
     <div v-else>
       There are no clients... Lets add one now <br /><br />
-      <router-link v-bind:to="{ name: 'addclient' }" class="link">Add Post</router-link>
     </div>
+    <b-btn variant="primary" @click="editClient({})">Add client</b-btn>
     <client ref="editClient"></client>
   </b-container>
 </template>
