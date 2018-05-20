@@ -4,13 +4,14 @@ const path            = require('path');
 const cookieParser    = require('cookie-parser');
 const logger          = require('morgan');
 const cors            = require('cors');
-const clientsRouter   = require('./routes/clients');
-const providersRouter = require('./routes/providers.js');
 const swaggerUi       = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 // Load models
 require('./models');
+
+const clientsRouter   = require('./routes/clients');
+const providersRouter = require('./routes/providers.js');
 
 var app = express();
 
