@@ -2,7 +2,8 @@
   <b-modal v-model="showModal" size="lg" busy centered title="Client">
     <b-container class="container">
       <b-form ref="form">
-        <b-form-group>
+        <b-form-group label="Name:"
+                      horizontal>
           <b-form-input type="text"
                         name="name"
                         placeholder="Name"
@@ -10,7 +11,8 @@
                         v-model="name">
           </b-form-input>
         </b-form-group>
-        <b-form-group>
+        <b-form-group label="Email:"
+                      horizontal>
           <b-form-input type="email"
                         name="email"
                         placeholder="Email"
@@ -18,7 +20,8 @@
                         v-model="email">
           </b-form-input>
         </b-form-group>
-        <b-form-group>
+        <b-form-group label="Phone:"
+                      horizontal>
           <b-form-input type="text"
                         name="phone"
                         placeholder="Phone"
@@ -89,11 +92,11 @@ export default {
       }
       let response = {}
       try {
-      if (typeof client.id !== 'undefined') {
-        response = await this.updateClient(client)
-      } else {
-        response = await this.addClient(client)
-      }
+        if (typeof client.id !== 'undefined') {
+          response = await this.updateClient(client)
+        } else {
+          response = await this.addClient(client)
+        }
       } catch (e) {
         this.$swal('Oops', 'Something went wrong :(', 'error')
       }

@@ -1,7 +1,8 @@
 <template>
   <div>
     <b-form class="form">
-      <b-form-group>
+      <b-form-group label="Providers:"
+                    horizontal>
         <b-input-group>
             <b-form-input type="text"
                           name="provider-name"
