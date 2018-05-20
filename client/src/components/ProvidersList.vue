@@ -43,7 +43,6 @@ export default {
     this.$root.$on('providersListChanged', () => this.getProviders())
   },
 
-
   computed: {
     selected: {
       set: function (selected) {
