@@ -43,10 +43,6 @@ export default {
     this.$root.$on('providersListChanged', () => this.getProviders())
   },
 
-  methods: {
-    editProvider (provider) {
-      this.$refs[provider._id + '_edit'].show(provider)
-    },
 
   computed: {
     selected: {
