@@ -1,16 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+const createError     = require('http-errors');
+const express         = require('express');
+const path            = require('path');
+const cookieParser    = require('cookie-parser');
+const logger          = require('morgan');
+const cors            = require('cors');
+const clientsRouter   = require('./routes/clients');
+const providersRouter = require('./routes/providers.js');
+const swaggerUi       = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 // Load models
 require('./models');
-
-var clientsRouter = require('./routes/clients');
-var providersRouter = require('./routes/providers.js');
-// var swaggerRouter = require('./routes/swagger.js');
 
 var app = express();
 
@@ -20,12 +20,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+// connect routers
 app.use('/clients', clientsRouter);
 app.use('/providers', providersRouter);
-// app.use('/docs', swaggerRouter);
-const swaggerUi       = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
 
+// connect Swagger
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // catch 404 and forward to error handler
