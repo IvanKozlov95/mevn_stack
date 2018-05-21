@@ -35,8 +35,10 @@
     </b-container>
     <div slot="modal-footer" class="w-100">
       <b-row>
-        <b-col v-if="id">
-          <b-button variant="danger" @click="deleteClient">Delete client</b-button>
+        <b-col>
+          <div v-if="id">
+            <b-button variant="danger" @click="e => deleteClient(id)">Delete client</b-button>
+          </div>
         </b-col>
         <b-col></b-col>
         <b-col>
@@ -115,19 +117,15 @@ export default {
         this.$swal('Oops', 'Something went wrong :(', 'error')
       }
       if (response.status === 200) {
-        this.showModal = false
         this.$root.$emit('clientsListChanged')
+        this.close()
       }
     },
 
     async addClient (client) {
       let response = await ClientsService.addClient(client)
       if (response.status === 200) {
-        this.$swal(
-          'Great!',
-          `New client has been added!`,
-          'success'
-        )
+        this.$swal('Great!', `New client has been added!`, 'success')
       }
       return response
     },
@@ -135,11 +133,7 @@ export default {
     async updateClient (client) {
       let response = await ClientsService.updateClient(client)
       if (response.status === 200) {
-        this.$swal(
-          'Great!',
-          `Client has been updated!`,
-          'success'
-        )
+        this.$swal('Great!', `Client has been updated!`, 'success')
       }
       return response
     },
@@ -167,5 +161,4 @@ export default {
 .form input {
   margin-bottom: 10px;
 }
-
 </style>

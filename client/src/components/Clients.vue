@@ -22,7 +22,7 @@
       There are no clients... Lets add one now <br /><br />
     </div>
     <b-btn variant="primary" @click="editClient({})">Add client</b-btn>
-    <client ref="editClient"></client>
+    <client ref="client"></client>
   </b-container>
 </template>
 
@@ -46,22 +46,15 @@ export default {
   methods: {
     async getClients () {
       const response = await ClientsService.fetchClients()
-      console.log(response.data.clients)
       this.clients = response.data.clients
     },
 
-    async deleteClient (id) {
-      if (typeof id !== 'undefined') {
-        let response = await ClientsService.deleteClient({ id: id })
-        if (response.status === 200) {
-          this.$root.$emit('clientsListChanged')
-          this.getClients()
-        }
-      }
+    editClient (client) {
+      this.$refs.client.open(client)
     },
 
-    editClient (client) {
-      this.$refs.editClient.open(client)
+    deleteClient (id) {
+      this.$refs.client.deleteClient(id)
     }
   }
 }
@@ -69,20 +62,6 @@ export default {
 
 <style type="text/css">
   .container {
-    width: 700px;
-  }
-
-  a {
-    color: #4d7ef7;
-    text-decoration: none;
-  }
-
-  a.link {
-    background: #4d7ef7;
-    color: #fff;
-    padding: 10px 80px;
-    text-transform: uppercase;
-    font-size: 12px;
-    font-weight: bold;
+    width: 70%;
   }
 </style>
