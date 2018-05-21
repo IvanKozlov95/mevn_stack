@@ -40,9 +40,10 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  console.error(err);
-  if (err.name === 'MongoNetworkError') {
-    err.message = 'Can\'t connect to db';
+  console.log(err)
+  if (err.name === 'ValidationError') {
+    err.status = 409;
+    err.message = 'Fields should be unique';
   }
   res.status(err.status || 500);
   res.send({ message: err.message });

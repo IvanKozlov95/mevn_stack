@@ -22,7 +22,8 @@ router.post('/add', (req, res, next) => {
     providers: req.body.providers
   });
   newClient.save()
-    .then(() => res.send('Client added'));
+    .then(() => res.send('Client added'))
+    .catch(next);
 })
 
 router.put('/:id', (req, res, next) => {
