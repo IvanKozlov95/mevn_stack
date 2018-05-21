@@ -81,6 +81,9 @@
           "200": {
             "description": "Client is updated"
           },
+          "409": {
+            "$ref": "#/responses/DuplicateError"
+          },
           "500": {
             "$ref": "#/responses/ServerError"
           }
@@ -132,6 +135,9 @@
         "responses": {
           "200": {
             "description": "Client is created"
+          },
+          "409": {
+            "$ref": "#/responses/DuplicateError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
@@ -191,6 +197,9 @@
               "$ref": "#/definitions/Provider"
             }
           },
+          "409": {
+            "$ref": "#/responses/DuplicateError"
+          },
           "500": {
             "$ref": "#/responses/ServerError"
           }
@@ -243,6 +252,9 @@
           "200": {
             "description": "Provider is created"
           },
+          "409": {
+            "$ref": "#/responses/DuplicateError"
+          },
           "500": {
             "$ref": "#/components/responses/ServerError"
           }
@@ -254,6 +266,12 @@
   "responses": {
     "ServerError": {
       "description": "Something bad happened...",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "DuplicateError": {
+      "description": "Duplicate fields",
       "schema": {
         "$ref": "#/definitions/Error"
       }
@@ -348,7 +366,7 @@
       "properties": {
         "message": { "type": "string" }
       },
-      "required": [ "code", "message" ]
+      "required": [ "message" ]
     }
   }
 }
