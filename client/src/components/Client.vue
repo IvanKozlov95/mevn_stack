@@ -29,9 +29,9 @@
                         v-model="phone">
           </b-form-input>
         </b-form-group>
-        <addprovider ref="addProviderModal"></addprovider>
-        <providerslist ref="providersList"></providerslist>
       </b-form>
+      <addprovider ref="addProviderModal"></addprovider>
+      <providerslist ref="providersList"></providerslist>
     </b-container>
     <div slot="modal-footer" class="w-100">
       <b-row>
@@ -79,11 +79,12 @@ export default {
     },
 
     close () {
-      this.setData({})
+      this.setData({providers: []})
       this.showModal = false
     },
 
     setData (client) {
+      console.log(client)
       this.id = client._id
       this.name = client.name
       this.email = client.email
@@ -106,20 +107,25 @@ export default {
         phone: this.phone,
         providers: this.$refs.providersList.selected.map(p => p._id)
       }
-      let response = {}
-      try {
-        if (typeof client.id !== 'undefined') {
-          response = await this.updateClient(client)
-        } else {
-          response = await this.addClient(client)
-        }
-      } catch (e) {
-        this.$swal('Oops', 'Something went wrong :(', 'error')
+
+      let onError = (err) => {
+        const msg = err.response.data.error || 'Something went wrong :('
+        this.$swal('Oops', msg, 'error')
       }
-      if (response.status === 200) {
+
+      let onSuccess = () => {
         this.$root.$emit('clientsListChanged')
         this.close()
       }
+
+      let method = ''
+      if (typeof client.id !== 'undefined') {
+        method = 'updateClient'
+      } else {
+        method = 'addClient'
+      }
+      await this[method](client)
+        .then(onSuccess, onError)
     },
 
     async addClient (client) {
