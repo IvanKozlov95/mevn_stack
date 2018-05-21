@@ -55,7 +55,7 @@ follow the instructions in sections below.
 
 ## Documentation
 
-  To see REST api documentation follow instructions in [Usage][#usage] to deploy app
+  To see REST api documentation follow instructions in [Usage](#usage) to deploy app
   (locally or via docker). Then open localhost:3000/docs or \<docker-machine ip\>:3000/docs
   in browser.
 
