@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form class="form">
+    <b-form ref="form">
       <b-form-group label="Providers:"
                     horizontal>
         <b-input-group>
@@ -35,6 +35,13 @@ export default {
 
   methods: {
     async addProvider () {
+      let form = this.$refs.form
+
+      if (!form.checkValidity()) {
+        form.reportValidity()
+        return
+      }
+
       ProvidersService.addProvider({ name: this.name })
         .then(() => {
           this.$root.$emit('providersListChanged')
