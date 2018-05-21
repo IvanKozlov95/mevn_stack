@@ -6,6 +6,7 @@ const logger          = require('morgan');
 const cors            = require('cors');
 const swaggerUi       = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const mongoose        = require('./lib/mongoose');
 
 // Load models
 require('./models');

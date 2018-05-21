@@ -1,10 +1,10 @@
 const express     = require('express');
 const router      = express.Router();
 const mongoose    = require('mongoose');
-const mongooseMw  = require('../middlewares/mongoose');
+// const mongooseMw  = require('../middlewares/mongoose');
 const Client = mongoose.model('Client');
 
-router.get('/', mongooseMw.connectMongo, (req, res, next) => {
+router.get('/', (req, res, next) => {
   Client.find({})
     .populate('providers')
     .then((doc) => {
@@ -13,7 +13,7 @@ router.get('/', mongooseMw.connectMongo, (req, res, next) => {
     .catch((err) => console.error(err));
 })
 
-router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
+router.post('/add', (req, res, next) => {
   console.log(req.body);
   let newClient = new Client({
     name: req.body.name,
@@ -25,7 +25,7 @@ router.post('/add', mongooseMw.connectMongo, (req, res, next) => {
     .then(() => res.send('Client added'));
 })
 
-router.put('/:id', mongooseMw.connectMongo, (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   let objectId = new mongoose.Types.ObjectId(req.params.id);
   console.log(req.body);
   Client.findById(objectId)
@@ -40,7 +40,7 @@ router.put('/:id', mongooseMw.connectMongo, (req, res, next) => {
     .catch(next);
 })
 
-router.delete('/:id', mongooseMw.connectMongo, (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   Client
     .remove({ _id: new mongoose.Types.ObjectId(req.params.id) })
     .then(() => res.send('Client deleted'))
