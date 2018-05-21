@@ -1,10 +1,11 @@
 <template>
-  <b-container class="container">
+  <b-container>
     <h1>Clients</h1>
     <div v-if="clients.length > 0" class="table-wrap">
       <br/>
       <b-table striped
                bordered
+               fixed
                :items="clients"
                :fields="displayFields">
         <template slot="providers" slot-scope="data">
@@ -63,5 +64,13 @@ export default {
 <style type="text/css">
   .container {
     width: 70%;
+  }
+
+  th, td {
+    word-wrap: break-word;
+  }
+
+  table button {
+    margin: 5 auto;
   }
 </style>
