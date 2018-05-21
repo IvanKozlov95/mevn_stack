@@ -1,6 +1,7 @@
 <template>
   <div v-if="visible">
-    <b-input-group size="sm">
+    <b-form ref="form">
+      <b-input-group size="sm">
         <b-form-input type="text"
                       name="provider-name"
                       placeholder="Provider name"
@@ -11,6 +12,7 @@
           <b-button variant="danger" @click="visible=false">Cancel</b-button>
         </b-input-group-append>
       </b-input-group>
+    </b-form>
   </div>
 </template>
 
@@ -38,17 +40,26 @@ export default {
     },
 
     async updateProvider () {
-      let response
-      try {
-        response = await ProvidersService.updateProvider(this.provider)
-      } catch (e) {
-        this.$swal('Oops', 'Something went wrong :(', 'error')
+      let form = this.$refs.form
+
+      if (!form.checkValidity()) {
+        form.reportValidity()
+        return
       }
-      if (response.status === 200) {
-        this.$swal('Great!', 'Provider has been updated!', 'success')
-        this.$root.$emit('providersListChanged')
+
+      let onError = (err) => {
+        const msg = err.response.data.message || 'Something went wrong :('
+        this.$swal('Oops', msg, 'error')
+      }
+
+      let onSuccess = () => {
         this.visible = false
+        this.$root.$emit('providersListChanged')
+        this.$swal('Great', 'Provider has been updated!', 'success')
       }
+
+      await ProvidersService.updateProvider(this.provider)
+        .then(onSuccess, onError)
     }
   }
 }

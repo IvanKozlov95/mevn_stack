@@ -43,7 +43,7 @@ export default {
       }
 
       let onError = (err) => {
-        const msg = err.response.data.error || 'Something went wrong :('
+        const msg = err.response.data.message || 'Something went wrong :('
         this.$swal('Oops', msg, 'error')
       }
 
