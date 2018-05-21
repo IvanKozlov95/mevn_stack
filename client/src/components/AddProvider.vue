@@ -42,16 +42,19 @@ export default {
         return
       }
 
-      ProvidersService.addProvider({ name: this.name })
-        .then(() => {
-          this.$root.$emit('providersListChanged')
-          this.$swal(
-            'Done',
-            `New provider has been added!`,
-            'success'
-          )
-        })
-      this.name = ''
+      let onError = (err) => {
+        const msg = err.response.data.error || 'Something went wrong :('
+        this.$swal('Oops', msg, 'error')
+      }
+
+      let onSuccess = () => {
+        this.name = ''
+        this.$root.$emit('providersListChanged')
+        this.$swal('Done', `New provider has been added!`, 'success')
+      }
+
+      await ProvidersService.addProvider({ name: this.name })
+        .then(onSuccess, onError)
     }
   }
 }
