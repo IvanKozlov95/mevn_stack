@@ -34,7 +34,16 @@
       </b-form>
     </b-container>
     <div slot="modal-footer" class="w-100">
+      <b-row>
+        <b-col v-if="id">
+          <b-button variant="danger" @click="deleteClient">Delete client</b-button>
+        </b-col>
+        <b-col></b-col>
+        <b-col>
+          <b-button @click="close">Cancel</b-button>
         <b-button variant="primary" @click="sumbitForm">{{ buttonText }}</b-button>
+        </b-col>
+      </b-row>
     </div>
   </b-modal>
 </template>
@@ -65,6 +74,11 @@ export default {
       this.setData(client)
       this.buttonText = typeof this.id === 'undefined' ? 'Add client' : 'Update client'
       this.showModal = true
+    },
+
+    close () {
+      this.setData({})
+      this.showModal = false
     },
 
     setData (client) {
@@ -128,6 +142,18 @@ export default {
         )
       }
       return response
+    },
+
+    async deleteClient (id) {
+      id = id || this.id
+      if (typeof id !== 'undefined') {
+        let response = await ClientsService.deleteClient({ id: id })
+        if (response.status === 200) {
+          this.$swal('Done', 'Sad to see you clients flee. Try not to lose all of them', 'warning')
+          this.$root.$emit('clientsListChanged')
+          this.close()
+        }
+      }
     }
   }
 }
