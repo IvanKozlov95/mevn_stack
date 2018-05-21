@@ -1,0 +1,17 @@
+version: '2.2'
+services: 
+  rest-server:
+    container_name: rest-server
+    image: rest-server
+    ports:
+      - '3000:3000'
+  vue_app:
+    container_name: vue_app
+    image: vue-app
+    ports: 
+      - '8080:8080'
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    ports: 
+      - '27017:27017'
