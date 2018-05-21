@@ -18,16 +18,12 @@ The acronym “MEVN” stands for “[MongoDB][1] [Express.js][2] [VueJS][3] [No
 * Express.js >= 4
 * Node.js >= 10
 
-To install simply clone the repo:
-
-
-
 ## Usage
 
 First, clone the repo:
 
     git clone https://github.com/IvanKozlov95/protranslating
-   cd protranslating
+    cd protranslating
 
 Application can be run two ways: locally or via docker. Depends on what you want 
 follow the instructions in sections below.
@@ -50,8 +46,8 @@ follow the instructions in sections below.
     npm i
     npm run start
   
-  Now you can access application on http://localhost:8080/
-
+  Now you can access application on http://localhost:8080/. See [features](#features)
+  section to see what app can do.
 
   ### Docker
 
