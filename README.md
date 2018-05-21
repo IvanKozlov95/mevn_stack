@@ -46,14 +46,26 @@ follow the instructions in sections below.
     npm i
     npm run start
   
-  Now you can access application on http://localhost:8080/. See [features](#features)
+  Now you can access application on http://localhost:8080/clients. See [features](#features)
   section to see what app can do.
 
   ### Docker
 
+  Currently under developing
+
 ## Documentation
 
+  To see REST api documentation follow instructions in [Usage][#usage] to deploy app
+  (locally or via docker). Then open localhost:3000/docs or <docker-machine ip>:3000/docs
+  in browser.
+
 ## Features
+
+  Application has to entities: Client and Provider. Client has name, email, phone and 
+  list of providers. Provider has name. All fields must be unique and not empty. User can:
+
+  * Add/edit/delete clients
+  * Add/edit/delete providers
 
 
 [1]: https://www.mongodb.com/ "MongoDB"
