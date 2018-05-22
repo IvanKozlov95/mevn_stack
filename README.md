@@ -67,7 +67,7 @@ follow the instructions in sections below.
     cd ../client
     docker build --build-arg base_url=http://192.168.99.100:3000 --build-arg host=0.0.0.0 -t vue-app .
     cd ../docker
-    docker-compose ud -d
+    docker-compose up -d
 
   After these steps you will be able to access app on \<you_machine_ip\>:8080.
   Rest API is avaliable at \<you_machine_ip\>:3000
