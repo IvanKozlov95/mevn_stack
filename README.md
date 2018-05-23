@@ -51,7 +51,26 @@ follow the instructions in sections below.
 
   ### Docker
 
-  Currently under developing
+  Make sure your docker daemon is running. 
+
+    docker ps
+
+  Start docker-machine and get its ip.
+
+    docker-machine start \<machine-name\>
+    docker-machine ip \<machine-name\>
+
+  From root of cloned folder do following commands. Replace ip with you docker-machine ip.
+
+    cd server
+    docker build --build-arg mongodb=mongodb://192.168.99.100/ -t rest-server .
+    cd ../client
+    docker build --build-arg base_url=http://192.168.99.100:3000 --build-arg host=0.0.0.0 -t vue-app .
+    cd ../docker
+    docker-compose up -d
+
+  After these steps you will be able to access app on \<you_machine_ip\>:8080.
+  Rest API is avaliable at \<you_machine_ip\>:3000
 
 ## Documentation
 
