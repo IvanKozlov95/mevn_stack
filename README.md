@@ -22,7 +22,7 @@ The acronym “MEVN” stands for “[MongoDB][1] [Express.js][2] [VueJS][3] [No
 
 First, clone the repo:
 
-    git clone https://github.com/IvanKozlov95/protranslating
+    git clone https://github.com/IvanKozlov95/mevn_stack
     cd protranslating
 
 Application can be run two ways: locally or via docker. Depends on what you want 
