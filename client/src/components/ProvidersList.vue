@@ -92,6 +92,16 @@ export default {
         await ProvidersService.deleteProvider({ id: id })
         this.getProviders()
       }
+    },
+
+    clear () {
+      let checkboxes = this.$el.getElementsByTagName('input')
+      console.log('In clear')
+      for (let checkbox of checkboxes) {
+        if (checkbox.checked) {
+          checkbox.click()
+        }
+      }
     }
   }
 }

@@ -79,12 +79,12 @@ export default {
     },
 
     close () {
-      this.setData({providers: []})
+      this.setData({})
+      this.$refs.providersList.clear()
       this.showModal = false
     },
 
     setData (client) {
-      console.log(client)
       this.id = client._id
       this.name = client.name
       this.email = client.email
