@@ -44,13 +44,21 @@ export default {
 
       let onError = (err) => {
         const msg = err.response.data.message || 'Something went wrong :('
-        this.$swal('Oops', msg, 'error')
+        this.$toasted.show('Oops ' + message, {
+          type: 'error',
+          icon: 'error',
+          duration: 1000
+        })
       }
 
       let onSuccess = () => {
         this.name = ''
         this.$root.$emit('providersListChanged')
-        this.$swal('Done', `New provider has been added!`, 'success')
+        this.$toasted.show('New provider has been added!', {
+          type: 'success',
+          icon: 'done',
+          duration: 1000
+        })
       }
 
       await ProvidersService.addProvider({ name: this.name })
@@ -60,6 +68,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-</style>

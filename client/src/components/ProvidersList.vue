@@ -81,9 +81,17 @@ export default {
       const response = await ProvidersService.updateProvider(this.current)
       if (response.status === 200) {
         this.getProviders()
-        this.$swal('Great!', 'Provider has been added!', 'success')
+        this.$toasted.show('Provider has been added!', {
+          type: 'success',
+          icon: 'done',
+          duration: 1000
+        })
       } else {
-        this.$swal('Oops', 'Something went wrong :(', 'failure')
+        this.$toasted.show('Oops! Something went wrong :(', {
+          type: 'error',
+          icon: 'error',
+          duration: 1000
+        })
       }
     },
 

@@ -49,13 +49,21 @@ export default {
 
       let onError = (err) => {
         const msg = err.response.data.message || 'Something went wrong :('
-        this.$swal('Oops', msg, 'error')
+        this.$toasted.show('Oops ' + msg, {
+          type: 'error',
+          icon: 'error',
+          duration: 1000
+        })
       }
 
       let onSuccess = () => {
         this.visible = false
         this.$root.$emit('providersListChanged')
-        this.$swal('Great', 'Provider has been updated!', 'success')
+        this.$toasted.show('Provider has been updated!', {
+          type: 'success',
+          icon: 'done',
+          duration: 1000
+        })
       }
 
       await ProvidersService.updateProvider(this.provider)

@@ -6,7 +6,7 @@ import router from './router'
 import VModal from 'vue-js-modal'
 import BootstrapVue from 'bootstrap-vue'
 import VueMultiselect from 'vue-multiselect'
-import VueSweetalert2 from 'vue-sweetalert2'
+import Toasted from 'vue-toasted'
 import Client from '@/components/Client'
 import AddProvider from '@/components/AddProvider'
 import EditProvider from '@/components/EditProvider'
@@ -14,7 +14,9 @@ import ProvidersList from '@/components/ProvidersList'
 
 Vue.use(VModal)
 Vue.use(BootstrapVue)
-Vue.use(VueSweetalert2)
+Vue.use(Toasted, {
+  iconPack: 'material'
+})
 Vue.component('client', Client)
 Vue.component('addprovider', AddProvider)
 Vue.component('editprovider', EditProvider)

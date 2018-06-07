@@ -110,7 +110,11 @@ export default {
 
       let onError = (err) => {
         const msg = err.response.data.message || 'Something went wrong :('
-        this.$swal('Oops', msg, 'error')
+        this.$toasted.show('Oops ' + msg, {
+          type: 'error',
+          icon: 'error',
+          duration: 1000
+        })
       }
 
       let onSuccess = () => {
@@ -131,7 +135,11 @@ export default {
     async addClient (client) {
       let response = await ClientsService.addClient(client)
       if (response.status === 200) {
-        this.$swal('Great!', `New client has been added!`, 'success')
+        this.$toasted.show('New client has been added!', {
+          type: 'success',
+          icon: 'done',
+          duration: 1000
+        })
       }
       return response
     },
@@ -139,7 +147,11 @@ export default {
     async updateClient (client) {
       let response = await ClientsService.updateClient(client)
       if (response.status === 200) {
-        this.$swal('Great!', `Client has been updated!`, 'success')
+        this.$toasted.show('Client has been updated!', {
+          type: 'success',
+          icon: 'done',
+          duration: 1000
+        })
       }
       return response
     },
@@ -149,7 +161,11 @@ export default {
       if (typeof id !== 'undefined') {
         let response = await ClientsService.deleteClient({ id: id })
         if (response.status === 200) {
-          this.$swal('Done', 'Sad to see you clients flee. Try not to lose all of them', 'warning')
+          this.$toasted.show('Sad to see you clients flee. Try not to lose all of them', {
+            type: 'info',
+            icon: 'directions_walk',
+            duration: 1000
+          })
           this.$root.$emit('clientsListChanged')
           this.close()
         }
