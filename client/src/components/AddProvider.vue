@@ -44,7 +44,7 @@ export default {
 
       let onError = (err) => {
         const msg = err.response.data.message || 'Something went wrong :('
-        this.$toasted.show('Oops ' + message, {
+        this.$toasted.show('Oops ' + msg, {
           type: 'error',
           icon: 'error',
           duration: 1000
